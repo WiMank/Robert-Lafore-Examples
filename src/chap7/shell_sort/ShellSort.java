@@ -5,34 +5,122 @@ package chap7.shell_sort;
 // (powered by Fernflower decompiler)
 //
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-class disk {
-    private final int groundLevel = 300;
-    private final int height = 20;
-    public int width;
-    public Color color;
-    public String label;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
 
-    public disk(int var1, Color var2, String var3) {
-        this.width = var1;
-        this.color = var2;
-        this.label = var3;
+public class ShellSort extends Applet implements Runnable, ActionListener {
+    private Image offscreenImage;
+    private Graphics offscreenGraphics;
+    private int aWidth;
+    private int aHeight;
+    private Thread runner;
+    private int groupSize = 10;
+    private personGroup thePersonGroup;
+    private boolean runFlag;
+    private int order = 1;
+    private Button newButton;
+    private Button sizeButton;
+    private Button drawButton;
+    private Button runButton;
+    private Button stepButton;
+
+    public void init() {
+        this.thePersonGroup = new personGroup(this.groupSize, this.order);
+        this.setLayout(new FlowLayout(2));
+        this.newButton = new Button("New");
+        this.add(this.newButton);
+        this.newButton.addActionListener(this);
+        this.sizeButton = new Button("Size");
+        this.add(this.sizeButton);
+        this.sizeButton.addActionListener(this);
+        this.drawButton = new Button("Draw");
+        this.add(this.drawButton);
+        this.drawButton.addActionListener(this);
+        this.runButton = new Button("Run");
+        this.add(this.runButton);
+        this.runButton.addActionListener(this);
+        this.stepButton = new Button("Step");
+        this.add(this.stepButton);
+        this.stepButton.addActionListener(this);
+        this.aWidth = this.thePersonGroup.getAppletWidth();
+        this.aHeight = this.thePersonGroup.getAppletHeight();
+        this.offscreenImage = this.createImage(this.aWidth, this.aHeight);
+        this.offscreenGraphics = this.offscreenImage.getGraphics();
+        this.runFlag = false;
+        this.thePersonGroup.setDrawMode(2);
     }
 
-    public void drawDisk(Graphics var1, int var2, int var3) {
-        int var4 = var2 - this.width / 2;
-        int var5 = 300 - (var3 + 1) * 20;
-        var1.setColor(Color.black);
-        var1.drawRect(var4, var5, this.width - 1, 19);
-        var1.drawOval(var4 - 10, var5, 19, 19);
-        var1.drawOval(var4 + this.width - 10 - 1, var5, 19, 19);
-        var1.setColor(this.color);
-        var1.fillRect(var4 + 1, var5 + 1, this.width - 2, 18);
-        var1.fillOval(var4 - 10 + 1, var5 + 1, 18, 18);
-        var1.fillOval(var4 + this.width - 10, var5 + 1, 18, 18);
-        var1.setColor(Color.black);
-        var1.drawString(this.label, var4, var5 + 10 + 4);
+    public void paint(Graphics var1) {
+        this.thePersonGroup.draw(this.offscreenGraphics);
+        var1.drawImage(this.offscreenImage, 0, 0, this);
+    }
+
+    public void update(Graphics var1) {
+        this.paint(var1);
+    }
+
+    public void actionPerformed(ActionEvent var1) {
+        if (var1.getSource() == this.newButton) {
+            this.runFlag = false;
+            this.order = this.order == 1 ? 2 : 1;
+            this.thePersonGroup = new personGroup(this.groupSize, this.order);
+        } else if (var1.getSource() == this.sizeButton) {
+            this.runFlag = false;
+            this.groupSize = this.groupSize == 10 ? 100 : 10;
+            this.thePersonGroup = new personGroup(this.groupSize, this.order);
+        } else if (var1.getSource() == this.drawButton) {
+            this.runFlag = false;
+            this.thePersonGroup.setDrawMode(2);
+        } else if (var1.getSource() == this.runButton) {
+            this.thePersonGroup.setDrawMode(1);
+            this.runFlag = true;
+        } else if (var1.getSource() == this.stepButton && !this.thePersonGroup.getDone()) {
+            this.runFlag = false;
+            this.thePersonGroup.sortStep();
+            this.thePersonGroup.setDrawMode(1);
+        }
+
+        this.repaint();
+    }
+
+    public void start() {
+        if (this.runner == null) {
+            this.runner = new Thread(this);
+            this.runner.start();
+        }
+
+    }
+
+    public void stop() {
+        this.runner = null;
+    }
+
+    public void run() {
+        Thread var1 = Thread.currentThread();
+
+        while (this.runner == var1) {
+            if (this.runFlag && !this.thePersonGroup.getDone()) {
+                this.thePersonGroup.sortStep();
+                this.repaint();
+                this.thePersonGroup.setDrawMode(1);
+                int var2 = this.groupSize == 10 ? 250 : 75;
+
+                try {
+                    Thread.sleep((long) var2);
+                } catch (InterruptedException var3) {
+                }
+            }
+        }
+
+    }
+
+    public ShellSort() {
     }
 }
