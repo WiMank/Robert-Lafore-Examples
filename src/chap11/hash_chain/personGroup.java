@@ -16,7 +16,7 @@ class personGroup {
     private final int textHeight = 13;
     private final int hF1 = 12;
     private final int hF2 = 6;
-    private final int hF3;
+    private final int hF3 =0;
     private final int vF = 8;
     private final int columnWidth = 60;
     private final int cellWidth = 35;
