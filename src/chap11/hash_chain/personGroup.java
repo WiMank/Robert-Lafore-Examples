@@ -5,8 +5,7 @@ package chap11.hash_chain;
 // (powered by Fernflower decompiler)
 //
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 
 class personGroup {
     private final int appletWidth = 440;
@@ -16,7 +15,7 @@ class personGroup {
     private final int textHeight = 13;
     private final int hF1 = 12;
     private final int hF2 = 6;
-    private final int hF3 =0;
+    private final int hF3 = 0;
     private final int vF = 8;
     private final int columnWidth = 60;
     private final int cellWidth = 35;
@@ -53,7 +52,7 @@ class personGroup {
         this.totalBuckets = var1;
         this.bucketArray = new bucket[this.totalBuckets];
 
-        for(int var2 = 0; var2 < this.totalBuckets; ++var2) {
+        for (int var2 = 0; var2 < this.totalBuckets; ++var2) {
             this.bucketArray[var2] = new bucket();
         }
 
@@ -83,9 +82,9 @@ class personGroup {
     }
 
     public person makePerson(int var1) {
-        int var2 = 100 + (int)(Math.random() * 154.0D);
-        int var3 = 100 + (int)(Math.random() * 154.0D);
-        int var4 = 100 + (int)(Math.random() * 154.0D);
+        int var2 = 100 + (int) (Math.random() * 154.0D);
+        int var3 = 100 + (int) (Math.random() * 154.0D);
+        int var4 = 100 + (int) (Math.random() * 154.0D);
         Color var5 = new Color(var2, var3, var4);
         return new person(var1, var5);
     }
@@ -96,7 +95,7 @@ class personGroup {
             this.codePart = 1;
         }
 
-        switch(this.codePart) {
+        switch (this.codePart) {
             case 1:
                 this.note = "Enter number of linked lists in array: ";
                 this.drawMode = 1;
@@ -124,7 +123,7 @@ class personGroup {
             case 4:
                 this.bucketArray = new bucket[this.totalBuckets];
 
-                for(int var3 = 0; var3 < this.totalBuckets; ++var3) {
+                for (int var3 = 0; var3 < this.totalBuckets; ++var3) {
                     this.bucketArray[var3] = new bucket();
                 }
 
@@ -153,7 +152,7 @@ class personGroup {
             this.codePart2 = 1;
         }
 
-        switch(this.codePart2) {
+        switch (this.codePart2) {
             case 1:
                 this.note = "Enter number of items to fill in";
                 this.drawMode = 1;
@@ -162,7 +161,7 @@ class personGroup {
             case 2:
                 int var3 = this.totalBuckets * 6;
                 if (var1 && var2 >= 0 && var2 <= var3) {
-                    for(int var4 = 0; var4 < this.totalBuckets; ++var4) {
+                    for (int var4 = 0; var4 < this.totalBuckets; ++var4) {
                         this.bucketArray[var4] = new bucket();
                     }
 
@@ -201,12 +200,12 @@ class personGroup {
         this.curList = 0;
         this.codePart = 1;
 
-        while(this.nPersons < var1) {
+        while (this.nPersons < var1) {
             this.insert(true, -1);
-            int var2 = (int)(Math.random() * 999.0D);
+            int var2 = (int) (Math.random() * 999.0D);
             this.insert(true, var2);
 
-            while(this.codePart != 1) {
+            while (this.codePart != 1) {
                 this.insert(true, -1);
             }
         }
@@ -220,7 +219,7 @@ class personGroup {
             this.codePart = 1;
         }
 
-        switch(this.codePart) {
+        switch (this.codePart) {
             case 1:
                 this.note = "Enter key of item to insert";
                 this.drawMode = 1;
@@ -257,7 +256,7 @@ class personGroup {
                     return;
                 }
 
-                for(int var3 = this.bucketArray[this.curList].nLinks; var3 > 0; --var3) {
+                for (int var3 = this.bucketArray[this.curList].nLinks; var3 > 0; --var3) {
                     this.bucketArray[this.curList].linkArray[var3] = this.bucketArray[this.curList].linkArray[var3 - 1];
                 }
 
@@ -291,7 +290,7 @@ class personGroup {
             this.codePart = 1;
         }
 
-        switch(this.codePart) {
+        switch (this.codePart) {
             case 1:
                 this.note = "Enter key of item to find";
                 this.codePart = 2;
@@ -353,7 +352,7 @@ class personGroup {
             this.codePart = 1;
         }
 
-        switch(this.codePart) {
+        switch (this.codePart) {
             case 1:
                 this.note = "Enter key of item to delete";
                 this.drawMode = 1;
@@ -404,7 +403,7 @@ class personGroup {
                 this.bucketArray[this.curList].linkArray[this.curLink] = null;
                 int var3 = this.bucketArray[this.curList].nLinks;
 
-                for(int var4 = this.curLink; var4 < var3 - 1; ++var4) {
+                for (int var4 = this.curLink; var4 < var3 - 1; ++var4) {
                     this.bucketArray[this.curList].linkArray[var4] = this.bucketArray[this.curList].linkArray[var4 + 1];
                 }
 
@@ -527,11 +526,11 @@ class personGroup {
                 var1.fillRect(10, 45, 320, 25);
             }
 
-            for(int var2 = 0; var2 < this.totalBuckets; ++var2) {
+            for (int var2 = 0; var2 < this.totalBuckets; ++var2) {
                 if (var2 >= this.topDisplayLine && var2 < this.topDisplayLine + 10) {
                     this.drawLink(var1, var2, 0);
 
-                    for(int var3 = 1; var3 < this.bucketArray[var2].nLinks && this.bucketArray[var2].linkArray[var3] != null; ++var3) {
+                    for (int var3 = 1; var3 < this.bucketArray[var2].nLinks && this.bucketArray[var2].linkArray[var3] != null; ++var3) {
                         this.drawLink(var1, var2, var3);
                     }
                 }
